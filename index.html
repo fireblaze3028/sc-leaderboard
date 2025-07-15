@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Leaderboard</title>
+    <link href="./main.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet" />
+    <script src="https://unpkg.com/vue@3.3.4/dist/vue.global.js"></script>
+    <script src="/lib/reconnecting-websocket.js"></script>
+    <script src="/lib/consts.js"></script>
+    <script src="/lib/utils.js"></script>
+    <script src="components/countUp.js"></script>
+  </head>
+
+  <body>
+    <div id="app" v-cloak>
+      <div v-if="data.show" >
+        <div class="team-info" :style="{ 'opacity': (data.playersMapRight.size > 0) ? 1 : 0 }">
+          <div class="team-names">
+            <p class="team-name">Blue Team</p>
+            <div class="flex"></div>
+            <p class="team-name">Red Team</p>
+          </div>
+          <div class="team-scores">
+            <score :total="data.blueScore"></score>
+            <div class="flex"></div>
+            <score :total="data.blueScore - data.redScore" :diff="true"></score>
+            <div class="flex"></div>
+            <score :total="data.redScore"></score>
+          </div>
+        </div>
+        <div class="leaderboard-both">
+          <div class="leaderboard-full">
+            <div class="leaderboard-cap">
+              <player 
+              v-for="player of data.playersMap"
+              :token="player[1]"
+              :user="data.tokens.banchoUsername"
+              :cap="true"
+              :main="player[1].Main"
+              :key="player[0]"></player>
+            </div>
+            <div class="leaderboard">
+              <player 
+              v-for="player of data.playersMap"
+              :token="player[1]"
+              :user="data.tokens.banchoUsername"
+              :cap="false"
+              :main="player[1].Main"
+              :key="player[0]"></player>
+            </div>
+          </div>
+          <div class="flex"></div>
+          <div class="leaderboard-full">
+            <div class="leaderboard-cap">
+              <player 
+              v-for="player of data.playersMapRight"
+              :token="player[1]"
+              :user="data.tokens.banchoUsername"
+              :cap="true" 
+              :reverse="true"
+              :main="player[1].Main"
+              :key="player[0]"></player>
+            </div>
+            <div class="leaderboard">
+              <player 
+              v-for="player of data.playersMapRight"
+              :token="player[1]"
+              :user="data.tokens.banchoUsername"
+              :cap="false"
+              :reverse="true"
+              :main="player[1].Main"
+              :key="player[0]"></player>
+            </div>
+          </div>
+        </div>
+        
+        
+      </div>
+    </div>
+    <script src="./main.js" type="module"></script>
+  </body>
+</html>
