@@ -19,6 +19,7 @@ const Score = {
     },
     watch: {
         total(newValue, oldValue) {
+            // if this Score is calculating difference, indicate who is winning by colour
             if (this.diff) {
                 if (newValue > 0) {
                     this.$refs.teamScore.className = "team-score blue";
@@ -30,7 +31,7 @@ const Score = {
                     this.$refs.teamScore.className = "team-score grey";
                 }
             }
-            this.count.update(newValue);
+            this.count.update(Math.abs(newValue));
         }
     },
 }

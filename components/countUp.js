@@ -13,6 +13,7 @@
   
       countUp.js
       by @inorganik
+      padDecimals option by @fireblaze3028
   
   */
   
@@ -36,7 +37,7 @@
           decimal: '.', // character to use as a decimal
           easingFn: easeOutExpo, // optional custom easing function, default is Robert Penner's easeOutExpo
           formattingFn: formatNumber, // optional custom formatting function, default is formatNumber above
-          padDecimals: 0,
+          padDecimals: 0, // optional decimals to pad before the number (20 w/padDecimals 8 -> 00000020, 123456789 w/padDecimals 8 -> 123456789)
           prefix: '', // optional text before the result
           suffix: '', // optional text after the result
           numerals: [] // optionally pass an array of custom numerals for 0-9

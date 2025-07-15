@@ -1,2 +1,1 @@
 # Leaderboard for StreamCompanion
-

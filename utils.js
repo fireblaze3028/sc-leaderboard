@@ -1,7 +1,7 @@
 function calcAcc(Hit300, Hit100, Hit50, HitMiss) {
-    const total = (Hit300 + Hit100 + Hit50 + HitMiss) * 3;
+    const total = (Hit300 + Hit100 + Hit50 + HitMiss) * 3; // we would multiply by 300, however since we want in percent, 300 / 100 = 3
 
-    return (((Hit300 * 300) + (Hit100 * 100) + (Hit50 * 50)) / total).toFixed(2);
+    return (((Hit300 * 300) + (Hit100 * 100) + (Hit50 * 50)) / total);
 }
 
 function calcPosition(position, mainPlayer) {
@@ -11,6 +11,7 @@ function calcPosition(position, mainPlayer) {
         // if main player isn't on the same team show the top players on that team
         return (position.TeamPosition - 2) * playerHeight;
     }
+
     return (position.TeamPosition - Math.max(mainPlayer.TeamPosition, otherSpots + 2) + otherSpots) * playerHeight;
 }
 
@@ -20,6 +21,7 @@ function getDisplayMods(mods) {
         return str + "NM";
     }
 
+    // check if each bit is toggled and add their mod accordingly
     for (let i = 0; i < 31; i++) {
         if ((mods & (1 << i)) != 0) {
             str += modNames[i];
@@ -28,6 +30,7 @@ function getDisplayMods(mods) {
     return str;
 }
 
+// mod names according to their bit flag (bit 0 is NF, bit 1 is EZ etc)
 const modNames = [
     "NF",
     "EZ",
