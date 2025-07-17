@@ -22,13 +22,13 @@ const Score = {
             // if this Score is calculating difference, indicate who is winning by colour
             if (this.diff) {
                 if (newValue > 0) {
-                    this.$refs.teamScore.className = "team-score blue";
+                    this.$refs.teamScore.className = "team-score blue-diff";
                 }
                 else if (newValue < 0) {
-                    this.$refs.teamScore.className = "team-score red";
+                    this.$refs.teamScore.className = "team-score red-diff";
                 }
                 else {
-                    this.$refs.teamScore.className = "team-score grey";
+                    this.$refs.teamScore.className = "team-score grey-diff";
                 }
             }
             this.count.update(Math.abs(newValue));

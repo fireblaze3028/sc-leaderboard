@@ -236,17 +236,20 @@ div {
   align-items: center;
 }
 
-.blue {
+.blue-diff {
   font-size: 3vh;
   color: #6DB5EF;
+  text-shadow: 2px 2px 0.5vh #000;
 }
 
-.red {
+.red-diff {
   font-size: 3vh;
   color: #ef716d;
+  text-shadow: 2px 2px 0.5vh #000;
 }
 
-.grey {
+.grey-diff {
   font-size: 3vh;
   color: rgb(170, 170, 170);
+  text-shadow: 2px 2px 0.5vh #000;
 }

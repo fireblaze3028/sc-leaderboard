@@ -61,7 +61,6 @@ const app = {
         if (!mainPlayer || ((mainPlayer.Hit300 + mainPlayer.Hit100 + mainPlayer.Hit50 + mainPlayer.HitMiss) > (temp.Hit300 + temp.Hit100 + temp.Hit50 + temp.HitMiss))) {
           data.playersMap = new Map();
           data.playersMapRight = new Map();
-          data.show = true;
         }
         mainPlayer = temp;
       }
@@ -84,7 +83,15 @@ const app = {
           position.banchoId = data.tokens.banchoId;
 
           // whether this position is the main player or not
-          position.Main = mainPlayer ? playingSinglePlayer ? (mainPlayer.Mods.ModsXor1 === position.Mods.ModsXor1) : (mainPlayer.Username === position.Username) : false;
+          if (mainPlayer) {
+            position.Main = playingSinglePlayer ? (mainPlayer.Mods.ModsXor1 === position.Mods.ModsXor1) : (mainPlayer.Username === position.Username);
+            if (mainPlayer.IsLeaderboardVisible) {
+              data.show = false;
+            }
+            else {
+              data.show = true;
+            }
+          }
 
           // count positions for each team
           if (!teamPositions.has(position.Team)) {
@@ -100,8 +107,8 @@ const app = {
 
           // blue team (or gamemode with no teams)
           if (position.Team <= 1) {
-            data.playersMap.set(playingSinglePlayer ? position.Mods.ModsXor1 : position.Username, position);
-            data.blueScore += position.Score;
+              data.playersMap.set(playingSinglePlayer ? position.Mods.ModsXor1 : position.Username, position);
+              data.blueScore += position.Score;
           }
           // red team
           else {
