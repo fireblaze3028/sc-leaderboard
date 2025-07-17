@@ -21,3 +21,5 @@ https://github.com/user-attachments/assets/7709f1f1-f681-4666-b7a5-cf8ad49d4ccd
 ### Made with ❤️ from Marc
 
 <img width="1000" height="400" alt="logo" src="https://github.com/user-attachments/assets/919204cd-29a9-41de-9471-2a0a8b4fca76" />
+
+Logo credit goes to [@chlo.ister](https://www.instagram.com/chlo.ister) on Instagram
