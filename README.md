@@ -6,7 +6,7 @@ A custom leaderboard built for StreamCompanion, fully compatible with singleplay
 
 Download the latest release [here](https://github.com/fireblaze3028/sc-leaderboard/releases/latest) and open StreamCompanion. Go to `Settings -> Web server -> Open overlay files location`. Next, open the `overlays` folder and extract the folder there.
 
-Once the `sc-leaderboard` folder is inside, navigate [here](http://localhost:20727/), locate the sc-leaderboard overlay, and try it out in a map!
+Once the `sc-leaderboard` folder is inside, navigate [here](http://localhost:20727/), locate the sc-leaderboard overlay, and try it out in a map! **Make sure you have the leaderboard turned off in-game, or it won't show!**
 
 # Showcases
 
