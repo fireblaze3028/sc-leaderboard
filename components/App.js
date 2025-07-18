@@ -31,29 +31,43 @@ const app = {
     // player currently playing
     let mainPlayer;
 
-    data.rws = watchTokens(['leaderBoardMainPlayer', 'leaderBoardPlayers', 'banchoId', 'banchoUsername', 'rawStatus'], (values) => {
+    let show;
 
-      if (values["rawStatus"] !== undefined) {
-        previousStatus = currentStatus;
-        currentStatus = values["rawStatus"];
-
-        // if player isnt playing, don't show leaderboard
-        if (currentStatus !== 2) {
-          data.show = false;
-        }
-      }
-
-      // positions for each person on their respective team
-      const teamPositions = new Map();
-
-      // playing on singleplayer if status is 7 (results screen) or 5 (song select)
-      const playingSinglePlayer = previousStatus === 7 || previousStatus === 5;
+    data.rws = watchTokens(['leaderBoardMainPlayer', 'leaderBoardPlayers', 'banchoId', 'banchoUsername', 'rawStatus', 'time', 'firstHitObjectTime', 'isBreakTime'], (values) => {
+      show = true;
 
       for (let key in values) {
         try {
           values[key] = JSON.parse(values[key]);
         } catch (error) {/* parse what can be parsed and leave strings untouched */}
       }
+
+      if (values.rawStatus !== undefined) {
+        previousStatus = currentStatus;
+        currentStatus = values.rawStatus;
+
+        // if player isnt playing, don't show leaderboard
+        if (currentStatus !== 2) {
+          show = false;
+        }
+      }
+
+      if (values.time !== undefined) {
+        if (values.time * 1000 < data.tokens.firstHitObjectTime) {
+          show = false;
+        }
+      }
+
+      const isBreakTime = data.tokens.isBreakTime;
+      if (isBreakTime) { 
+        show = false;
+      }
+
+      // positions for each person on their respective team
+      const teamPositions = new Map();
+
+      // playing on multiplayer if previous status is 12 (multiplayer room)
+      const playingMultiplayer = previousStatus === 12;
 
       const temp = values.leaderBoardMainPlayer;
       // if there is a main player and the replay changes (for example when retrying a map), create a new map to be filled with new players and show the leaderboard
@@ -65,6 +79,10 @@ const app = {
         mainPlayer = temp;
       }
 
+      if (mainPlayer && mainPlayer.IsLeaderboardVisible) {
+        show = false;
+      }
+
       const leaderboard = values.leaderBoardPlayers;
       // if theres a leaderboard update, update all players on it 
       if (leaderboard instanceof Array) {
@@ -73,24 +91,19 @@ const app = {
         data.blueScore = 0;
         data.redScore = 0;
 
+        console.log(leaderboard);
         for (const position of leaderboard) {
           // calculate different properties for each position
           position.Accuracy = calcAcc(position.Hit300, position.Hit100, position.Hit50, position.HitMiss);
           position.DisplayMods = getDisplayMods(position.Mods.Value);
-          position.DisplayCombo = playingSinglePlayer ? position.MaxCombo : position.Combo;
+          position.DisplayCombo = playingMultiplayer ? position.Combo : position.MaxCombo;
           
           // bancho id to use to get pfp of user
           position.banchoId = data.tokens.banchoId;
 
           // whether this position is the main player or not
           if (mainPlayer) {
-            position.Main = playingSinglePlayer ? (mainPlayer.Mods.ModsXor1 === position.Mods.ModsXor1) : (mainPlayer.Username === position.Username);
-            if (mainPlayer.IsLeaderboardVisible) {
-              data.show = false;
-            }
-            else {
-              data.show = true;
-            }
+            position.Main = playingMultiplayer ? (mainPlayer.Username === position.Username) : (mainPlayer.Mods.ModsXor1 === position.Mods.ModsXor1);
           }
 
           // count positions for each team
@@ -107,12 +120,12 @@ const app = {
 
           // blue team (or gamemode with no teams)
           if (position.Team <= 1) {
-              data.playersMap.set(playingSinglePlayer ? position.Mods.ModsXor1 : position.Username, position);
+              data.playersMap.set(playingMultiplayer ? position.Username : position.Mods.ModsXor1, position);
               data.blueScore += position.Score;
           }
           // red team
           else {
-            data.playersMapRight.set(playingSinglePlayer ? position.Mods.ModsXor1 : position.Username, position);
+            data.playersMapRight.set(playingMultiplayer ? position.Username : position.Mods.ModsXor1, position);
             data.redScore += position.Score;
           }
           
@@ -124,6 +137,7 @@ const app = {
         }
       }
 
+      data.show = show;
       Object.assign(data.tokens, values);
     });
   

@@ -35,7 +35,7 @@ div {
   background-color: #6DB5EF4C;
   height: 10vh;
   width: 35vh;
-  transition: all 0.3s;
+  transition: transform 0.3s;
   border-radius: 2vh;
   border-style: solid;
   border-width: 2px;
@@ -252,4 +252,8 @@ div {
   font-size: 3vh;
   color: rgb(170, 170, 170);
   text-shadow: 2px 2px 0.5vh #000;
+}
+
+.app-container {
+  transition: opacity 0.3s;
 }
