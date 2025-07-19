@@ -91,7 +91,6 @@ const app = {
         data.blueScore = 0;
         data.redScore = 0;
 
-        console.log(leaderboard);
         for (const position of leaderboard) {
           // calculate different properties for each position
           position.Accuracy = calcAcc(position.Hit300, position.Hit100, position.Hit50, position.HitMiss);

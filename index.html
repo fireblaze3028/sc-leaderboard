@@ -15,7 +15,7 @@
 
   <body>
     <div id="app" v-cloak>
-      <div class="app-container" v-if="data.tokens.rawStatus === 2" :style="{ 'opacity': data.show ? 1 : 0}">
+      <div class="app-container" v-if="data.tokens.rawStatus === 2 && data.tokens.leaderBoardMainPlayer !== null" :style="{ 'opacity': data.show ? 1 : 0}">
         <div class="team-info" :style="{ 'opacity': (data.playersMapRight.size > 0) ? 1 : 0 }">
           <div class="team-names">
             <p class="team-name">Blue Team</p>
