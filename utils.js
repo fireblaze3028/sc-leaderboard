@@ -21,9 +21,17 @@ function getDisplayMods(mods) {
         return str + "NM";
     }
 
+    // manual checks for specific mods (for example +NC has both NC and DT bits toggled which is unwanted)
+    if (mods & (1 << 9)) { // NC
+        mods &= ~(1 << 6); // disable DT
+    }
+    if (mods & (1 << 14)) { // PF
+        mods &= ~(1 << 5) // disable SD
+    }
+
     // check if each bit is toggled and add their mod accordingly
     for (let i = 0; i < 31; i++) {
-        if ((mods & (1 << i)) != 0) {
+        if ((mods & (1 << i))) {
             str += modNames[i];
         }
     }

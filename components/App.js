@@ -52,6 +52,7 @@ const app = {
         }
       }
 
+      // if the time is before the first HitObject, dont show leaderboard
       if (values.time !== undefined) {
         if (values.time * 1000 < data.tokens.firstHitObjectTime) {
           show = false;
